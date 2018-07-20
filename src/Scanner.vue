@@ -30,6 +30,10 @@
           type: Number,
           default: 480,
         }
+      },
+      runScanner: {
+        type: Boolean,
+        default: true
       }
     },
     data: function () {
@@ -60,17 +64,32 @@
         },
       }
     },
-    mounted: function () {
-      Quagga.init(this.quaggaState, function (err) {
-        if (err) {
-          return console.log(err);
+    watch: {
+      runScanner: function (run) {
+        if (run) {
+          this.startQuagga();
+        } else {
+          this.stopQuagga();
         }
-        Quagga.start();
-      });
+      }
+    },
+    mounted: function () {
+      this.startQuagga();
       Quagga.onDetected(this.onDetected ? this.onDetected : this._onDetected);
       Quagga.onProcessed(this.onProcessed ? this.onProcessed : this._onProcessed);
     },
     methods: {
+      startQuagga: function () {
+        Quagga.init(this.quaggaState, function (err) {
+          if (err) {
+            return console.log(err);
+          }
+          Quagga.start();
+        });
+      },
+      stopQuagga: function () {
+        Quagga.stop();
+      },
       _onProcessed: function (result) {
         let drawingCtx = Quagga.canvas.ctx.overlay,
           drawingCanvas = Quagga.canvas.dom.overlay;

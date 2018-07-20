@@ -29,7 +29,7 @@ export default {
 ```
 
 
-# Usage
+# Usage – props
 
 ### `onDetected` : function(result)
 
@@ -94,3 +94,11 @@ default:
   height: 480,
 }
 ```
+
+### runScanner: Boolean
+
+Set whether the scanner should be running.
+
+Reference: [https://github.com/serratus/quaggaJS#quaggastart](https://github.com/serratus/quaggaJS#quaggastart)
+
+default: `true`
